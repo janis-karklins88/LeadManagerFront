@@ -1,6 +1,8 @@
 // LeadDetails.jsx
 import React, { useEffect, useState } from "react";
 import { getActivities, addActivity, deleteActivity } from "../services/api";
+import { format } from 'date-fns';
+
 
 const LeadDetails = ({ lead, onClose }) => {
   const [activities, setActivities] = useState([]);
@@ -55,8 +57,26 @@ const LeadDetails = ({ lead, onClose }) => {
   return (
       <div className="relative">
       <h3 className="flex items-center w-full text-xl font-bold mb-4">
-  <span>Lead Details: {lead.name}</span>
-  <button onClick={onClose} className="ml-4 text-gray-500">X</button>
+  <span>{lead.name}</span>
+  {/* close button */}
+  <button
+  onClick={onClose}
+  className="ml-2 text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 p-1 rounded-full focus:outline-none"
+  aria-label="Close Lead Details"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-4 w-4"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+  >
+    <path
+      fillRule="evenodd"
+      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+      clipRule="evenodd"
+    />
+  </svg>
+</button>
 </h3>
 
 
@@ -83,11 +103,13 @@ const LeadDetails = ({ lead, onClose }) => {
         <tr key={activity.id} className="hover:bg-gray-50">
           <td className="border px-2 py-1">{activity.description}</td>
           <td className="border px-2 py-1">{activity.type}</td>
-          <td className="border px-2 py-1">{activity.date}</td>
           <td className="border px-2 py-1">
+          {activity.date ? format(new Date(activity.date), "MMM d, yyyy, h:mm a") : "—"}
+        </td>
+          <td className="border px-2 py-1 text-center">
             <button
               onClick={() => handleDeleteActivity(activity.id)}
-              className="text-red-500"
+              className="text-red-500 font-medium px-1 py-0 rounded hover:bg-red-50 focus:outline-none"
             >
               Delete
             </button>

@@ -184,7 +184,7 @@ const LeadForm = ({ lead, onSuccess, onCancel }) => {
 
         {/* Form Action Buttons (Submit & Cancel) */}
         <div className="flex space-x-4">
-          {/* Submit Button - Label changes dynamically */}
+          
           <button
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -192,8 +192,7 @@ const LeadForm = ({ lead, onSuccess, onCancel }) => {
             {formData.id ? "Update Lead" : "Submit"}
           </button>
 
-          {/* Cancel Button (Only visible in Edit Mode) */}
-          {formData.id && (
+                
             <button
               type="button"
               onClick={onCancel}
@@ -201,7 +200,7 @@ const LeadForm = ({ lead, onSuccess, onCancel }) => {
             >
               Cancel
             </button>
-          )}
+          
         </div>
       </form>
     </div>

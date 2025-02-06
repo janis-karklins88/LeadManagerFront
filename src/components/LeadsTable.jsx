@@ -70,13 +70,16 @@ const LeadsTable = ({ onEdit, onDelete, reloadTable }) => {
       {/* Search Bar & Sorting Controls */}
       <div className="mb-4 flex space-x-4">
         {/* Search Input for Name */}
-        <input
-          type="text"
-          placeholder="Search by name..."
-          value={searchInput} 
-          onChange={handleSearchChange}
-          className="border rounded px-2 py-1"
-        />
+        <label className="block">
+		
+			<input
+			type="text"
+			placeholder="Search by name..."
+			value={searchInput}
+			onChange={handleSearchChange}
+			className="border rounded px-2 py-1 w-60"
+			/>
+		</label>
 
         {/* Sort By Dropdown */}
         <label className="block">
@@ -145,75 +148,90 @@ const LeadsTable = ({ onEdit, onDelete, reloadTable }) => {
 		
       {/* Error message */}
       {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
-		{/* Leads table */}
+	  
+		{/***************** Leads table ********************/}
 		
-      <table className="table-auto w-full border-collapse border border-gray-300">
+      <table className="table-auto w-full border-collapse">
   <thead>
-    <tr>
-      <th className="border border-gray-300 px-4 py-2">Name</th>
-      <th className="border border-gray-300 px-4 py-2">Email</th>
-      <th className="border border-gray-300 px-4 py-2">Phone</th>
-      <th className="border border-gray-300 px-4 py-2 text-red-500 ">Status</th>
-      <th className="border border-gray-300 px-4 py-2">Priority</th>
-      <th className="border border-gray-300 px-4 py-2">Notes</th>
-      <th className="border border-gray-300 px-4 py-2">Date</th>
-      <th className="border border-gray-300 px-4 py-2">Actions</th>
+    <tr className="bg-gray-200">
+      <th className="px-6 py-3 text-left font-semibold whitespace-nowrap">Name</th>
+      <th className="px-6 py-3 text-left font-semibold">Email</th>
+      <th className="px-6 py-3 text-left font-semibold">Phone</th>
+      <th className="px-6 py-3 text-left font-semibold">Status</th>
+      <th className="px-6 py-3 text-left font-semibold">Priority</th>
+      <th className="px-6 py-3 text-left font-semibold">Date</th>
+      <th className="px-6 py-3 text-left font-semibold">Actions</th>
     </tr>
   </thead>
-  <tbody>
-    {leads.length === 0 ? (
+  {leads.length === 0 ? (
+    <tbody>
       <tr>
-        <td colSpan="8" className="text-center text-gray-500">
+        <td colSpan="7" className="px-6 py-4 text-center text-gray-500">
           No leads found.
         </td>
       </tr>
-    ) : (
-      leads.map((lead, idx) => (
-        <tr
-          key={lead.id}
-          className={`${idx % 2 === 0 ? "bg-gray-50" : "bg-white"} hover:bg-gray-100`}
-        >
-          <td className="border border-gray-300 px-4 py-2">{lead.name}</td>
-          <td className="border border-gray-300 px-4 py-2">{lead.email}</td>
-          <td className="border border-gray-300 px-4 py-2">{lead.phone}</td>
-          <td className="border border-gray-300 px-4 py-2">{lead.status}</td>
-          <td className="border border-gray-300 px-4 py-2">{lead.priority}</td>
-          <td className="border border-gray-300 px-4 py-2">{lead.notes || "—"}</td>
-          <td className="border border-gray-300 px-4 py-2">
+    </tbody>
+  ) : (
+    leads.map((lead, idx) => (
+      // Wrap each lead's rows in its own tbody with the "group" class
+      <tbody
+        key={lead.id}
+        className={`${idx % 2 === 0 ? "bg-gray-50" : "bg-white"} group`}
+      >
+        <tr className="group-hover:bg-gray-100">
+          <td className="px-6 py-4 whitespace-nowrap">{lead.name}</td>
+          <td className="px-6 py-4">{lead.email}</td>
+          <td className="px-6 py-4">{lead.phone}</td>
+          <td className="px-6 py-4">{lead.status}</td>
+          <td className="px-6 py-4">{lead.priority}</td>
+          <td className="px-6 py-4">
             {lead.createdAt ? format(new Date(lead.createdAt), "dd.MM.yyyy") : "—"}
           </td>
-          <td className="border border-gray-300 px-4 py-2">
-            {/* Buttons */}
-            <button
-              onClick={() => setSelectedLead(lead)}
-              className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 mr-2"
-            >
-              View Details
-            </button>
-            <button
-              onClick={() => onEdit && onEdit(lead)}
-              className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
-              disabled={!onEdit}
-            >
-              Edit
-            </button>
-            <button
-              onClick={() => onDelete(lead.id)}
-              className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 ml-2"
-            >
-              Delete
-            </button>
-          </td>
+          <td className="px-6 py-4">
+  <div className="flex space-x-2">
+    <button
+      onClick={() => setSelectedLead(lead)}
+      className="border border-blue-500 text-blue-500 font-medium px-3 py-1 rounded hover:bg-blue-100 focus:outline-none"
+    >
+      Activities
+    </button>
+    <button
+      onClick={() => onEdit && onEdit(lead)}
+      className="border border-indigo-500 text-indigo-500 font-medium px-3 py-1 rounded hover:bg-indigo-100 focus:outline-none"
+      disabled={!onEdit}
+    >
+      Edit
+    </button>
+    <button
+      onClick={() => onDelete(lead.id)}
+      className="border border-red-500 text-red-500 font-medium px-3 py-1 rounded hover:bg-red-50 focus:outline-none"
+    >
+      Delete
+    </button>
+  </div>
+</td>
+
         </tr>
-      ))
-    )}
-  </tbody>
+        {/* Render an extra row for notes if they exist */}
+        {lead.notes && (
+          <tr className="group-hover:bg-gray-100">
+            <td colSpan="7" className="px-6 py-2 text-sm text-gray-600 italic">
+              <strong>Notes:</strong> {lead.notes}
+            </td>
+          </tr>
+        )}
+      </tbody>
+    ))
+  )}
 </table>
+
+
+
 
 	  {/* Lead Details Modal */}
       {selectedLead && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-96 relative">
+        <div className="fixed inset-0 bg-transperent backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow-lg w-[400] relative">
             <LeadDetails lead={selectedLead} onClose={() => setSelectedLead(null)} />
           </div>
         </div>

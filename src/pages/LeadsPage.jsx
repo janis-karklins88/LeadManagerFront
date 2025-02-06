@@ -8,18 +8,12 @@ import { useAuth } from "../context/AuthContext";
 
 // Main page component that manages leads
 const LeadsPage = () => {
-  /**
-   * State to trigger table reload when a lead is created, updated, or deleted.
-   * Changing this state forces the `useEffect` in LeadsTable to re-fetch data.
-   */
+  // State to trigger table reload when a lead is modified
   const [reloadTable, setReloadTable] = useState(false);
-
-  /**
-   * State to store the lead being edited.
-   * If null, the form is in "Create Lead" mode.
-   * If an object (a lead), the form is in "Edit Lead" mode.
-   */
+  // Holds the lead that is currently being edited (or null for create)
   const [selectedLead, setSelectedLead] = useState(null);
+  // Controls whether the form is visible
+  const [showForm, setShowForm] = useState(false);
 
   /**
    * Callback function to handle successful form submission (creating/updating a lead).
@@ -29,6 +23,7 @@ const LeadsPage = () => {
   const handleFormSuccess = () => {
     setReloadTable(!reloadTable); // Triggers table data reload
     setSelectedLead(null); // Reset form to default (Create Mode)
+	setShowForm(false); // Hide form after successful create/update
   };
 
   /**
@@ -39,13 +34,26 @@ const LeadsPage = () => {
    */
   const handleEdit = (lead) => {
     setSelectedLead(lead);
+	setShowForm(true);
   };
+  
+  
 
   /**
    * Handles canceling an edit action.
    * - Clears the selected lead, resetting the form to "Create Lead" mode.
    */
-   
+    const handleCancel = () => {
+    setSelectedLead(null);
+	setShowForm(false);
+  };
+  
+  //handle add new Lead
+  const handleAddNew = () => {
+    setSelectedLead(null); // No lead means "create mode"
+    setShowForm(true);
+  };
+  
    //loging out
    const navigate = useNavigate(); // To navigate after logout
    const { logout } = useAuth();
@@ -59,9 +67,7 @@ const LeadsPage = () => {
 	navigate("/login");
   }
    
-  const handleCancel = () => {
-    setSelectedLead(null);
-  };
+ 
 
   /**
    * Handles deleting a lead.
@@ -91,17 +97,35 @@ const LeadsPage = () => {
    */
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">Leads Management</h1>
-	  {/* Logout Button */}
-      <button
-        onClick={handleLogout}
-        className="bg-red-500 text-white p-2 rounded mb-4"
-      >
-        Logout
-      </button>
+      <h1 className="text-3xl font-bold mb-6">Leads Management</h1>
+	  {/*Add leads and Logout buttons*/}
+	  <div className="flex justify-end space-x-4 mb-4">
+  <button
+    onClick={handleAddNew}
+    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 focus:outline-none"
+  >
+    Add New Lead
+  </button>
+  <button
+  onClick={handleLogout}
+  className="bg-red-300 text-grey px-3 py-1 rounded hover:bg-red-400 focus:outline-none"
+>
+  Logout
+</button>
+</div>
 
-      {/* The form to create or edit leads */}
-      <LeadForm lead={selectedLead} onSuccess={handleFormSuccess} onCancel={handleCancel} />
+	  
+      
+	  
+
+      {/* Conditionally render the LeadForm only when showForm is true */}
+      {showForm && (
+        <LeadForm
+          lead={selectedLead}
+          onSuccess={handleFormSuccess}
+          onCancel={handleCancel}
+        />
+      )}
 
       {/* The table displaying all leads */}
       <LeadsTable onEdit={handleEdit} onDelete={handleDelete} reloadTable={reloadTable} />
@@ -109,4 +133,4 @@ const LeadsPage = () => {
   );
 };
 
-export default LeadsPage; // Export the LeadsPage component for use in other parts of the app
+export default LeadsPage;

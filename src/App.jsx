@@ -19,23 +19,37 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Navigate replace to="/login" />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+      <div className="min-h-screen bg-gray-100 flex flex-col items-center p-8">
+        {/* Header */}
+        <header className="mb-8 w-full max-w-6xl">
           
-          {/* Protect the LeadsPage */}
-          <Route
-            path="/leads"
-            element={
-              <ProtectedRoute>
-                <LeadsPage />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </Router>
+        </header>
+
+        {/* Main Content */}
+        <main className="w-full max-w-6xl">
+          <Router>
+            <Routes>
+              <Route path="/" element={<Navigate replace to="/login" />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              {/* Protected Route for LeadsPage */}
+              <Route
+                path="/leads"
+                element={
+                  <ProtectedRoute>
+                    <LeadsPage />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </Router>
+        </main>
+
+        {/* Footer */}
+        <footer className="mt-8 text-sm text-gray-500 text-center">
+          © 2025 Lead Manager. Created by Janis Karklins.
+        </footer>
+      </div>
     </AuthProvider>
   );
 };
