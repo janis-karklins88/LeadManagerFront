@@ -19,9 +19,9 @@ const LoginPage = () => {
 
     try {
       
-      const response = await axios.post("await axios.post(
-  "https://lead-management-backend-oxbd.onrender.com/api/register",
-  formData
+      const response = await axios.post(
+    "https://lead-management-backend-oxbd.onrender.com/api/register",
+    formData
 );
 ", formData);
       login(response.data); // Use context login function
