@@ -18,21 +18,27 @@ const LoginPage = () => {
     setError("");
 
     try {
-      
+      // Typically you'd call /api/login here, not /api/register.
+      // Replace with your actual login endpoint if different:
       const response = await axios.post(
-    "https://lead-management-backend-oxbd.onrender.com/api/register",
-    formData
-);
-", formData);
-      login(response.data); // Use context login function
+        "https://lead-management-backend-oxbd.onrender.com/api/login",
+        formData
+      );
+
+      // Use the token returned (response.data) however your app expects it
+      login(response.data); // if you have a context-based login function
+
+      // Optionally set the token as a default header for subsequent requests
       axios.defaults.headers.common["Authorization"] = `Bearer ${response.data}`;
-      navigate("/leads"); // Redirect after login
+
+      // Navigate to leads page (or wherever you want after login)
+      navigate("/leads");
     } catch (err) {
       if (err.response && err.response.data) {
-      setError(err.response.data); // Show backend error message
-    } else {
-      setError("Invalid username or password.");
-    }
+        setError(err.response.data); // Show backend error message
+      } else {
+        setError("Invalid username or password.");
+      }
     }
   };
 

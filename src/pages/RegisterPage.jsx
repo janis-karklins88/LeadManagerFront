@@ -16,20 +16,20 @@ const RegisterPage = () => {
     setError("");
 
     try {
-      await axios.post("await axios.post(
-  "https://lead-management-backend-oxbd.onrender.com/api/register",
-  formData
-);
-", formData);
+      // Call your /api/register endpoint
+      await axios.post(
+        "https://lead-management-backend-oxbd.onrender.com/api/register",
+        formData
+      );
+
       alert("Registration successful! You can now log in.");
       navigate("/login"); // Redirect to login page
     } catch (err) {
-      
-		if (err.response && err.response.data) {
-		setError(err.response.data); // Show specific backend error
-		} 	else {
-		setError("An error occurred. Please try again.");
-    }
+      if (err.response && err.response.data) {
+        setError(err.response.data); // Show specific backend error
+      } else {
+        setError("An error occurred. Please try again.");
+      }
     }
   };
 
