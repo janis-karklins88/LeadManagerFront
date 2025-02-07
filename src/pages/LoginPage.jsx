@@ -19,7 +19,11 @@ const LoginPage = () => {
 
     try {
       
-      const response = await axios.post("http://localhost:8080/api/login", formData);
+      const response = await axios.post("await axios.post(
+  "https://lead-management-backend-oxbd.onrender.com/api/register",
+  formData
+);
+", formData);
       login(response.data); // Use context login function
       axios.defaults.headers.common["Authorization"] = `Bearer ${response.data}`;
       navigate("/leads"); // Redirect after login

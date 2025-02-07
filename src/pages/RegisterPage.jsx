@@ -16,7 +16,11 @@ const RegisterPage = () => {
     setError("");
 
     try {
-      await axios.post("http://localhost:8080/api/register", formData);
+      await axios.post("await axios.post(
+  "https://lead-management-backend-oxbd.onrender.com/api/register",
+  formData
+);
+", formData);
       alert("Registration successful! You can now log in.");
       navigate("/login"); // Redirect to login page
     } catch (err) {
