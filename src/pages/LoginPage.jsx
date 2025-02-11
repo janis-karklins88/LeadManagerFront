@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
+const API_URL = "https://lead-management-backend-bss2.onrender.com/api";
+//const API_URL = "http://localhost:8080/api";
+
 const LoginPage = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
@@ -19,8 +22,8 @@ const LoginPage = () => {
 
     try {
       //local and hosted backend
-      //const response = await axios.post("http://localhost:8080/api/login", formData);
-	  const response = await axios.post("https://lead-management-backend-bss2.onrender.com/api/login", formData);
+      
+	  const response = await axios.post(`${API_URL}/login`, formData);
 	  
       login(response.data); // Use context login function
       axios.defaults.headers.common["Authorization"] = `Bearer ${response.data}`;

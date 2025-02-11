@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = "https://lead-management-backend-bss2.onrender.com/api";
+//const API_URL = "http://localhost:8080/api";
+
 const RegisterPage = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
@@ -17,8 +20,8 @@ const RegisterPage = () => {
 
     try {
 		// local and hosted backend
-      //await axios.post("http://localhost:8080/api/register", formData);
-	  await axios.post("https://lead-management-backend-bss2.onrender.com/api/register", formData);
+      
+	  await axios.post(`${API_URL}/register`, formData);
       alert("Registration successful! You can now log in.");
       navigate("/login"); // Redirect to login page
     } catch (err) {
