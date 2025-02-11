@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //const API_URL = "http://localhost:8080/api";
-const API_URL = "https://lead-management-backend-oxbd.onrender.com";
+const API_URL = "https://lead-management-backend-bss2.onrender.com/api";
 
 //auto attach token to request
 axios.interceptors.request.use((config) => {

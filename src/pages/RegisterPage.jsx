@@ -16,7 +16,9 @@ const RegisterPage = () => {
     setError("");
 
     try {
-      await axios.post("http://localhost:8080/api/register", formData);
+		// local and hosted backend
+      //await axios.post("http://localhost:8080/api/register", formData);
+	  await axios.post("https://lead-management-backend-bss2.onrender.com/api/register", formData);
       alert("Registration successful! You can now log in.");
       navigate("/login"); // Redirect to login page
     } catch (err) {
@@ -56,7 +58,7 @@ const RegisterPage = () => {
             required
           />
         </div>
-        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full">
+        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 active:bg-green-700 active:scale-95 transition transform duration-150 w-full">
           Register
         </button>
       </form>

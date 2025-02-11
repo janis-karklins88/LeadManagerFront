@@ -92,8 +92,9 @@ const LeadDetails = ({ lead, onClose }) => {
   <table className="w-full mb-4 border-collapse">
     <thead>
       <tr>
-        <th className="border px-2 py-1">Description</th>
+        
         <th className="border px-2 py-1">Type</th>
+		<th className="border px-2 py-1">Description</th>
         <th className="border px-2 py-1">Date</th>
         <th className="border px-2 py-1">Actions</th>
       </tr>
@@ -101,8 +102,9 @@ const LeadDetails = ({ lead, onClose }) => {
     <tbody>
       {activities.map((activity) => (
         <tr key={activity.id} className="hover:bg-gray-50">
-          <td className="border px-2 py-1">{activity.description}</td>
+          
           <td className="border px-2 py-1">{activity.type}</td>
+		  <td className="border px-2 py-1">{activity.description}</td>
           <td className="border px-2 py-1">
           {activity.date ? format(new Date(activity.date), "MMM d, yyyy, h:mm a") : "—"}
         </td>
@@ -123,6 +125,14 @@ const LeadDetails = ({ lead, onClose }) => {
 		
 		{/* Add activity */}
       <h4 className="font-bold mb-2">Add Activity</h4>
+	  <input
+        type="text"
+        placeholder="Type (meeting, calls, etc)"
+        value={newActivity.type}
+        onChange={(e) => setNewActivity({ ...newActivity, type: e.target.value })}
+        className="border rounded px-2 py-1 mb-2 w-full"
+      />
+	  
       <input
         type="text"
         placeholder="Description"
@@ -130,13 +140,7 @@ const LeadDetails = ({ lead, onClose }) => {
         onChange={(e) => setNewActivity({ ...newActivity, description: e.target.value })}
         className="border rounded px-2 py-1 mb-2 w-full"
       />
-      <input
-        type="text"
-        placeholder="Type"
-        value={newActivity.type}
-        onChange={(e) => setNewActivity({ ...newActivity, type: e.target.value })}
-        className="border rounded px-2 py-1 mb-2 w-full"
-      />
+      
       <input
         type="datetime-local"
         name="date"
@@ -144,7 +148,7 @@ const LeadDetails = ({ lead, onClose }) => {
         onChange={(e) => setNewActivity({ ...newActivity, date: e.target.value })}
         className="border rounded px-2 py-1 mb-2 w-full"
       />
-      <button onClick={handleAddActivity} className="bg-blue-500 text-white px-4 py-2 rounded w-full">
+      <button onClick={handleAddActivity} className="bg-blue-500 text-white px-4 py-2 rounded active:bg-blue-700 active:scale-95 transition transform duration-150 w-full">
         Add Activity
       </button>
     </div>

@@ -102,7 +102,7 @@ const LeadsPage = () => {
 	  <div className="flex justify-end space-x-4 mb-4">
   <button
     onClick={handleAddNew}
-    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 focus:outline-none"
+    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 active:bg-blue-700 active:scale-95 transition transform duration-150 focus:outline-none"
   >
     Add New Lead
   </button>

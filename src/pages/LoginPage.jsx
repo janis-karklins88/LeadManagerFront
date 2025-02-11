@@ -18,8 +18,10 @@ const LoginPage = () => {
     setError("");
 
     try {
-      
-      const response = await axios.post("http://localhost:8080/api/login", formData);
+      //local and hosted backend
+      //const response = await axios.post("http://localhost:8080/api/login", formData);
+	  const response = await axios.post("https://lead-management-backend-bss2.onrender.com/api/login", formData);
+	  
       login(response.data); // Use context login function
       axios.defaults.headers.common["Authorization"] = `Bearer ${response.data}`;
       navigate("/leads"); // Redirect after login
@@ -59,7 +61,7 @@ const LoginPage = () => {
             required
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 active:bg-blue-700 active:scale-95 transition transform duration-150 w-full">
           Login
         </button>
       </form>
